@@ -82,29 +82,29 @@ def main_menu():
         else:
             print("Opzione non valida, riprova.")
             input("\nPremi Invio per continuare...")
-class StaffAuthentication:
-    def __init__(self, filename='credenziali_staff.csv'):
-        self.filename = filename
 
-    def verifica_credenziali_staff(self, nome, cognome, data_nascita, numero_badge):
-        try:
-            with open(self.filename, mode='r', newline='', encoding='utf-8') as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    if (row['nome'] == nome and row['cognome'] == cognome and 
-                        row['data_nascita'] == data_nascita and row['numero_badge'] == numero_badge):
-                        return True
-        except FileNotFoundError:
-            print(f"File {self.filename} non trovato.")
-        return False
+
+def __init__(self, filename='credenziali_staff.csv'):
+    self.filename = filename
+
+def verifica_credenziali_staff(self, nome, cognome, data_nascita, numero_badge):
+    try:
+        with open(self.filename, mode='r', newline='', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                if (row['nome'] == nome and row['cognome'] == cognome and 
+                    row['data_nascita'] == data_nascita and row['numero_badge'] == numero_badge):
+                    return True
+    except FileNotFoundError:
+        print(f"File {self.filename} non trovato.")
+    return False
     
 def staff_authentication():
-    auth = StaffAuthentication()
     nome = input("Nome: ")
     cognome = input("Cognome: ")
     data_nascita = input("Data di nascita (gg/mm/aaaa): ")
     numero_badge = input("Numero del badge: ")
-    if auth.verifica_credenziali_staff(nome, cognome, data_nascita, numero_badge):
+    if verifica_credenziali_staff(nome, cognome, data_nascita, numero_badge):
         return True
     else:
         print("Credenziali non valide. Accesso negato.")
