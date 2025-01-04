@@ -56,13 +56,6 @@ class Biblioteca:
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def staff_authentication():
-    nome = input("Nome: ")
-    cognome = input("Cognome: ")
-    data_nascita = input("Data di nascita (gg/mm/aaaa): ")
-    numero_badge = input("Numero del badge: ")
-    print(f"Benvenuto {nome} {cognome} (Badge: {numero_badge})")
-
 def main_menu():
     while True:
         clear_screen()
@@ -73,8 +66,8 @@ def main_menu():
         scelta = input("Scegli un'opzione: ")
 
         if scelta == '1':
-            staff_authentication()
-            staff_menu()
+            if staff_authentication():
+                staff_menu()
         elif scelta == '2':
             utente_menu()
         elif scelta == '3':
@@ -83,28 +76,26 @@ def main_menu():
             print("Opzione non valida, riprova.")
             input("\nPremi Invio per continuare...")
 
+class Staff:
+    def __init__(self, filename='credenziali_staff.csv'):
+        self.filename = filename
 
-def __init__(self, filename='credenziali_staff.csv'):
-    self.filename = filename
+    def verifica_credenziali_staff(self, username, password):
+        try:
+            with open(self.filename, mode='r', newline='', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if row['username'] == username and row['password'] == password:
+                        return True
+        except FileNotFoundError:
+            print(f"File {self.filename} non trovato.")
+        return False
 
-def verifica_credenziali_staff(self, nome, cognome, data_nascita, numero_badge):
-    try:
-        with open(self.filename, mode='r', newline='', encoding='utf-8') as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if (row['nome'] == nome and row['cognome'] == cognome and 
-                    row['data_nascita'] == data_nascita and row['numero_badge'] == numero_badge):
-                    return True
-    except FileNotFoundError:
-        print(f"File {self.filename} non trovato.")
-    return False
-    
 def staff_authentication():
-    nome = input("Nome: ")
-    cognome = input("Cognome: ")
-    data_nascita = input("Data di nascita (gg/mm/aaaa): ")
-    numero_badge = input("Numero del badge: ")
-    if verifica_credenziali_staff(nome, cognome, data_nascita, numero_badge):
+    username = input("Username: ")
+    password = input("Password: ")
+    staff = Staff()
+    if staff.verifica_credenziali_staff(username, password):
         return True
     else:
         print("Credenziali non valide. Accesso negato.")
