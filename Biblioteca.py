@@ -69,7 +69,8 @@ def main_menu():
             if staff_authentication():
                 staff_menu()
         elif scelta == '2':
-            utente_menu()
+            if utente_authentication():
+                utente_menu()
         elif scelta == '3':
             break
         else:
@@ -99,6 +100,33 @@ def staff_authentication():
         return True
     else:
         print("Credenziali non valide. Accesso negato.")
+        input("\nPremi Invio per continuare...")
+        return False
+
+class Utente:
+    def __init__(self, filename='credenziali_utente.csv'):
+        self.filename = filename
+
+    def verifica_credenziali_utente(self, username, password):
+        try:
+            with open(self.filename, mode='r', newline='', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if row['username'] == username and row['password'] == password:
+                        return True
+        except FileNotFoundError:
+            print(f"File {self.filename} non trovato.")
+        return False
+
+def utente_authentication():
+    username = input("Username: ")
+    password = input("Password: ")
+    utente = Utente()
+    if utente.verifica_credenziali_utente(username, password):
+        return True
+    else:
+        print("Credenziali non valide. Accesso negato.")
+        input("\nPremi Invio per continuare...")
         return False
 
 def staff_menu():
