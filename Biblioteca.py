@@ -53,6 +53,14 @@ class Biblioteca:
         for libro in self.libri:
             print(libro)
 
+    def modifica_prestito(self, titolo, prestato):
+        for libro in self.libri:
+            if libro.titolo == titolo:
+                libro.prestato = prestato
+                self.salva_libri()
+                return True
+        return False
+
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -68,8 +76,7 @@ def main_menu():
         if scelta == '1':
             staff_choice()
         elif scelta == '2':
-            if utente_authentication():
-                utente_menu()
+            utente_choice()
         elif scelta == '3':
             break
         else:
@@ -151,6 +158,40 @@ class Utente:
             print(f"File {self.filename} non trovato.")
         return False
 
+    def crea_account_utente(self, username, password):
+        with open(self.filename, mode='a', newline='', encoding='utf-8') as file:
+            fieldnames = ['username', 'password']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writerow({'username': username, 'password': password})
+
+def utente_choice():
+    while True:
+        clear_screen()
+        print("\nUtente della Biblioteca 📚")
+        print("1. Crea un nuovo account")
+        print("2. Accedi con un account esistente")
+        print("3. Torna al menu principale")
+        scelta = input("Scegli un'opzione: ")
+
+        if scelta == '1':
+            crea_account_utente()
+        elif scelta == '2':
+            if utente_authentication():
+                utente_menu()
+        elif scelta == '3':
+            break
+        else:
+            print("Opzione non valida, riprova.")
+            input("\nPremi Invio per continuare...")
+
+def crea_account_utente():
+    username = input("Inserisci un nuovo username: ")
+    password = input("Inserisci una nuova password: ")
+    utente = Utente()
+    utente.crea_account_utente(username, password)
+    print("Account creato con successo!")
+    input("\nPremi Invio per continuare...")
+
 def utente_authentication():
     username = input("Username: ")
     password = input("Password: ")
@@ -170,7 +211,8 @@ def staff_menu():
         print("1. Aggiungi libro")
         print("2. Rimuovi libro")
         print("3. Mostra libri")
-        print("4. Torna al menu principale")
+        print("4. Modifica stato di prestito di un libro")
+        print("5. Torna al menu principale")
         scelta = input("Scegli un'opzione: ")
 
         if scelta == '1':
@@ -188,6 +230,16 @@ def staff_menu():
             biblioteca.mostra_libri()
             input("\nPremi Invio per continuare...")
         elif scelta == '4':
+            print("Libri disponibili:")
+            biblioteca.mostra_libri()
+            titolo = input("Titolo del libro: ")
+            prestato = input("Il libro è prestato? (s/n): ").lower() == 's'
+            if biblioteca.modifica_prestito(titolo, prestato):
+                print("Stato di prestito modificato con successo.")
+            else:
+                print("Libro non trovato.")
+            input("\nPremi Invio per continuare...")
+        elif scelta == '5':
             break
         else:
             print("Opzione non valida, riprova.")
@@ -198,12 +250,24 @@ def utente_menu():
     while True:
         clear_screen()
         print("\nGestore Biblioteca - Utente 📚")
-        print("1. Mostra libri")
+        print("Libri disponibili:")
+        biblioteca.mostra_libri()
+        print("\n1. Prendi in prestito un libro")
         print("2. Torna al menu principale")
         scelta = input("Scegli un'opzione: ")
 
         if scelta == '1':
-            biblioteca.mostra_libri()
+            titolo = input("Inserisci il titolo del libro che vuoi prendere in prestito: ")
+            libro_trovato = False
+            for libro in biblioteca.libri:
+                if libro.titolo == titolo and not libro.prestato:
+                    libro.prestato = True
+                    biblioteca.salva_libri()
+                    print(f"Hai preso in prestito il libro: {libro.titolo}. Ora puoi venirlo a ritirare.")
+                    libro_trovato = True
+                    break
+            if not libro_trovato:
+                print("Libro non disponibile o già in prestito.")
             input("\nPremi Invio per continuare...")
         elif scelta == '2':
             break

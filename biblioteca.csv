@@ -1,7 +1,7 @@
 titolo,autore,anno,prestato
 The Lord of the Rings,J.R.R. Tolkien,1954,False
 To Kill a Mockingbird,Harper Lee,1960,False
-1984,George Orwell,1949,False
+1984,George Orwell,1949,True
 Pride and Prejudice,Jane Austen,1813,False
 The Great Gatsby,F. Scott Fitzgerald,1925,False
 Moby Dick,Herman Melville,1851,False
@@ -9,3 +9,17 @@ War and Peace,Leo Tolstoy,1869,False
 The Catcher in the Rye,J.D. Salinger,1951,False
 The Hobbit,J.R.R. Tolkien,1937,False
 Crime and Punishment,Fyodor Dostoevsky,1866,False
+Brave New World,Aldous Huxley,1932,False
+The Odyssey,Homer,-800,False
+Ulysses,James Joyce,1922,False
+The Divine Comedy,Dante Alighieri,1320,False
+Les Misérables,Victor Hugo,1862,False
+The Brothers Karamazov,Fyodor Dostoevsky,1880,False
+Madame Bovary,Gustave Flaubert,1857,False
+The Iliad,Homer,-750,False
+One Hundred Years of Solitude,Gabriel Garcia Marquez,1967,False
+The Adventures of Huckleberry Finn,Mark Twain,1884,False
+Anna Karenina,Leo Tolstoy,1877,False
+Don Quixote,Miguel de Cervantes,1605,False
+The Picture of Dorian Gray,Oscar Wilde,1890,False
+Frankenstein,Mary Shelley,1818,False
