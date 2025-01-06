@@ -66,8 +66,7 @@ def main_menu():
         scelta = input("Scegli un'opzione: ")
 
         if scelta == '1':
-            if staff_authentication():
-                staff_menu()
+            staff_choice()
         elif scelta == '2':
             if utente_authentication():
                 utente_menu()
@@ -91,6 +90,40 @@ class Staff:
         except FileNotFoundError:
             print(f"File {self.filename} non trovato.")
         return False
+
+    def crea_account_staff(self, username, password):
+        with open(self.filename, mode='a', newline='', encoding='utf-8') as file:
+            fieldnames = ['username', 'password']
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writerow({'username': username, 'password': password})
+
+def staff_choice():
+    while True:
+        clear_screen()
+        print("\nStaff della Biblioteca 📚")
+        print("1. Crea un nuovo account")
+        print("2. Accedi con un account esistente")
+        print("3. Torna al menu principale")
+        scelta = input("Scegli un'opzione: ")
+
+        if scelta == '1':
+            crea_account_staff()
+        elif scelta == '2':
+            if staff_authentication():
+                staff_menu()
+        elif scelta == '3':
+            break
+        else:
+            print("Opzione non valida, riprova.")
+            input("\nPremi Invio per continuare...")
+
+def crea_account_staff():
+    username = input("Inserisci un nuovo username: ")
+    password = input("Inserisci una nuova password: ")
+    staff = Staff()
+    staff.crea_account_staff(username, password)
+    print("Account creato con successo!")
+    input("\nPremi Invio per continuare...")
 
 def staff_authentication():
     username = input("Username: ")
