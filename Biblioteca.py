@@ -81,8 +81,7 @@ def main_menu():
             break
         else:
             print("Opzione non valida, riprova.")
-            input("\nPremi Invio per continuare...")
-
+            input("\nPremi Invio per continuare")
 class Staff:
     def __init__(self, filename='credenziali_staff.csv'):
         self.filename = filename
@@ -108,40 +107,84 @@ def staff_choice():
     while True:
         clear_screen()
         print("\nStaff della Biblioteca 📚")
-        print("1. Crea un nuovo account")
-        print("2. Accedi con un account esistente")
-        print("3. Torna al menu principale")
+        print("1. Accedi con un account esistente")
+        print("2. Torna al menu principale")
         scelta = input("Scegli un'opzione: ")
 
         if scelta == '1':
-            crea_account_staff()
-        elif scelta == '2':
             if staff_authentication():
                 staff_menu()
-        elif scelta == '3':
+        elif scelta == '2':
             break
         else:
             print("Opzione non valida, riprova.")
             input("\nPremi Invio per continuare...")
-
-def crea_account_staff():
-    username = input("Inserisci un nuovo username: ")
-    password = input("Inserisci una nuova password: ")
-    staff = Staff()
-    staff.crea_account_staff(username, password)
-    print("Account creato con successo!")
-    input("\nPremi Invio per continuare...")
 
 def staff_authentication():
     username = input("Username: ")
     password = input("Password: ")
     staff = Staff()
     if staff.verifica_credenziali_staff(username, password):
-        return True
+        return username, password
     else:
         print("Credenziali non valide. Accesso negato.")
         input("\nPremi Invio per continuare...")
-        return False
+        return None, None
+
+def crea_account_staff():
+    username = input("Inserisci un nuovo username: ")
+    password = input("Inserisci una nuova password: ")
+    staff = Staff()
+    staff.crea_account_staff(username, password)
+    print("Account staff creato con successo!")
+    input("\nPremi Invio per continuare...")
+
+def staff_menu():
+    biblioteca = Biblioteca()
+    username, password = staff_authentication()
+    while True:
+        clear_screen()
+        print("\nGestore Biblioteca - Staff 📚")
+        print("1. Aggiungi libro")
+        print("2. Rimuovi libro")
+        print("3. Mostra libri")
+        print("4. Modifica stato di prestito di un libro")
+        if username == 'Angelo_Galanti' and password == 'Il_Galo':
+            print("5. Crea nuovo account staff")
+        print("6. Torna al menu principale")
+        scelta = input("Scegli un'opzione: ")
+
+        if scelta == '1':
+            titolo = input("Titolo: ")
+            autore = input("Autore: ")
+            anno = int(input("Anno: "))
+            libro = Libro(titolo, autore, anno)
+            biblioteca.aggiungi_libro(libro)
+        elif scelta == '2':
+            print("Libri disponibili:")
+            biblioteca.mostra_libri()
+            titolo = input("Titolo del libro da rimuovere: ")
+            biblioteca.rimuovi_libro(titolo)
+        elif scelta == '3':
+            biblioteca.mostra_libri()
+            input("\nPremi Invio per continuare...")
+        elif scelta == '4':
+            print("Libri disponibili:")
+            biblioteca.mostra_libri()
+            titolo = input("Titolo del libro: ")
+            prestato = input("Il libro è prestato? (s/n): ").lower() == 's'
+            if biblioteca.modifica_prestito(titolo, prestato):
+                print("Stato di prestito modificato con successo.")
+            else:
+                print("Libro non trovato.")
+            input("\nPremi Invio per continuare...")
+        elif scelta == '5' and username == 'Angelo_Galanti' and password == 'Il_Galo':
+            crea_account_staff()
+        elif scelta == '6':
+            break
+        else:
+            print("Opzione non valida, riprova.")
+            input("\nPremi Invio per continuare...")
 
 class Utente:
     def __init__(self, filename='credenziali_utente.csv'):
