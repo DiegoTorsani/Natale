@@ -11,6 +11,10 @@ Questo progetto implementa un sistema di gestione di una biblioteca con funziona
 
 Se desideri contribuire a questo progetto, sentiti libero di fare una pull request o di segnalare eventuali problemi tramite le issues.
 
+## Autore
+
+Diego Torsani - [diego.torsani@studenti.isissgobetti.it](mailto:diego.torsani@studenti.isissgobetti.it)
+
 ## Licenza
 
 Questo progetto è concesso in licenza sotto i termini della licenza MIT. Vedi il file `LICENSE` per i dettagli.
