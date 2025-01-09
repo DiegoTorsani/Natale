@@ -15,7 +15,7 @@ anno di uscita:{self.anno}
 prestato={self.prestato}\n'''
 
 class Biblioteca:
-    def __init__(self, filename='biblioteca.csv'):
+    def __init__(self, filename='password/biblioteca.csv'):
         self.filename = filename
         self.libri = self.carica_libri()
 
@@ -86,7 +86,7 @@ def main_menu():
             print("Opzione non valida, riprova.")
             input("\nPremi Invio per continuare")
 class Staff:
-    def __init__(self, filename='credenziali_staff.csv'):
+    def __init__(self, filename='password/credenziali_staff.csv'):
         self.filename = filename
 
     def verifica_credenziali_staff(self, username, password):
@@ -190,7 +190,7 @@ def staff_menu():
             input("\nPremi Invio per continuare...")
 
 class Utente:
-    def __init__(self, filename='credenziali_utente.csv'):
+    def __init__(self, filename='password/credenziali_utente.csv'):
         self.filename = filename
 
     def verifica_credenziali_utente(self, username, password):
