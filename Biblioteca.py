@@ -9,7 +9,10 @@ class Libro:
         self.prestato = prestato
 
     def __repr__(self):
-        return f"Libro(titolo='{self.titolo}', autore='{self.autore}', anno={self.anno}, prestato={self.prestato})"
+        return f'''titolo del libro:{self.titolo} 
+nome dell'autore:{self.autore} 
+anno di uscita:{self.anno} 
+prestato={self.prestato}\n'''
 
 class Biblioteca:
     def __init__(self, filename='biblioteca.csv'):
