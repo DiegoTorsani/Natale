@@ -203,48 +203,6 @@ def utente_authentication():
         input("\nPremi Invio per continuare...")
         return False
 
-def staff_menu():
-    biblioteca = Biblioteca()
-    while True:
-        clear_screen()
-        print("\nGestore Biblioteca - Staff 📚")
-        print("1. Aggiungi libro")
-        print("2. Rimuovi libro")
-        print("3. Mostra libri")
-        print("4. Modifica stato di prestito di un libro")
-        print("5. Torna al menu principale")
-        scelta = input("Scegli un'opzione: ")
-
-        if scelta == '1':
-            titolo = input("Titolo: ")
-            autore = input("Autore: ")
-            anno = int(input("Anno: "))
-            libro = Libro(titolo, autore, anno)
-            biblioteca.aggiungi_libro(libro)
-        elif scelta == '2':
-            print("Libri disponibili:")
-            biblioteca.mostra_libri()
-            titolo = input("Titolo del libro da rimuovere: ")
-            biblioteca.rimuovi_libro(titolo)
-        elif scelta == '3':
-            biblioteca.mostra_libri()
-            input("\nPremi Invio per continuare...")
-        elif scelta == '4':
-            print("Libri disponibili:")
-            biblioteca.mostra_libri()
-            titolo = input("Titolo del libro: ")
-            prestato = input("Il libro è prestato? (s/n): ").lower() == 's'
-            if biblioteca.modifica_prestito(titolo, prestato):
-                print("Stato di prestito modificato con successo.")
-            else:
-                print("Libro non trovato.")
-            input("\nPremi Invio per continuare...")
-        elif scelta == '5':
-            break
-        else:
-            print("Opzione non valida, riprova.")
-            input("\nPremi Invio per continuare...")
-
 def utente_menu():
     biblioteca = Biblioteca()
     while True:
